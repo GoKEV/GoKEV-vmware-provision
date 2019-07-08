@@ -6,8 +6,8 @@
   roles:
     - GoKEV.vmware-provision
 
-- hosts: newlyprovisionedvm
-  roles:
-    - kev-role-post-build-one
-    - kev-role-post-build-two
+#- hosts: newlyprovisionedvm
+#  roles:
+#    - kev-role-post-build-one
+#    - kev-role-post-build-two
 
