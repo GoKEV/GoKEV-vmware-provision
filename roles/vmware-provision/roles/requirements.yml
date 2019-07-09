@@ -1,5 +1,0 @@
----
-- name: GoKEV.vmware-provision
-  version: master
-  src: https://github.com/GoKEV/GoKEV-vmware-provision.git
-
