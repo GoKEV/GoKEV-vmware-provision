@@ -1,0 +1,43 @@
+---
+- name: Build a VMware guest from template
+  hosts: localhost
+  gather_facts: no
+
+#  roles:
+#    - GoKEV-vmware-provision
+
+  vars:
+    random_vm_name: "GoKEV-newvm-{{ 9999 | random }}"
+
+  tasks:
+  - include_role:
+      name: GoKEV-vmware-provision
+    vars:
+      vc_hostname: vcenter.lab
+      vc_username: user
+      vc_password: pass
+      vc_datacenter: KevDC
+      vm_template: 'KEV - Template'
+      vm_name: "{{ vm_name | default('{{ random_vm_name }}' ) }}"
+      vm_cluster: KevCluster
+      vm_guestid: centos64Guest
+      vm_cpu_count: 1
+      vc_datastore: vsanDatastore
+      vm_disk_size: 20
+      vm_network: VM Network
+      vm_ram_mb: 1024
+      validate_certs: no
+
+
+- name: Standardize the new vm
+  hosts: newvm
+
+  vars:
+  - motd_template_file: templates/motd_gokev_bw
+
+  roles:
+  - prep-new-vm
+  - motd-splash
+  - vm-reboot
+
+

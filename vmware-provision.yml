@@ -1,0 +1,24 @@
+---
+- name: Build a VMware guest from template
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+#    random_vm_name: "GoKEV-newvm-{{ 9999 | random }}"
+
+  tasks:
+  - include_role:
+      name: vmware-provision
+
+- name: Standardize the new vm
+  hosts: newvm
+
+  vars:
+  - motd_template_file: templates/motd_gokev_bw
+
+  roles:
+  - prep-new-vm
+  - motd-splash
+  - vm-reboot
+
+
