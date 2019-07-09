@@ -1,9 +1,10 @@
 ---
 # defaults file for kev-vmware-provision/---
 
-vc_hostname: vcenter.lab
-vc_username: username
-vc_password: password
+## If these 3 are not defined, Ansible Tower will use the vcenter credential
+#vc_hostname: vcenter.lab
+#vc_username: username
+#vc_password: password
 vc_datacenter: KevDC
 vm_template: kev-template
 vm_name: GoKEV-newvm-00000
