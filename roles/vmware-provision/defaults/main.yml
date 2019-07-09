@@ -1,11 +1,11 @@
 ---
 # defaults file for kev-vmware-provision/---
 
-vc_hostname: 10.0.30.200
-vc_username: kev
-vc_password: kev
+vc_hostname: vcenter.lab
+vc_username: username
+vc_password: password
 vc_datacenter: KevDC
-vm_template: 'KEV - CentOS7'
+vm_template: kev-template
 vm_name: GoKEV-newvm-00000
 vm_cluster: KevCluster
 vm_guestid: centos64Guest
