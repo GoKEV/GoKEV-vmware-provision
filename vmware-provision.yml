@@ -15,7 +15,6 @@
 
   roles:
   - prep-new-vm
-  - motd-splash
   - vm-reboot
-
-
+  - motd-splash
+  
