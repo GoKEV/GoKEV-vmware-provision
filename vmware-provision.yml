@@ -3,9 +3,6 @@
   hosts: localhost
   gather_facts: no
 
-  vars:
-#    random_vm_name: "GoKEV-newvm-{{ 9999 | random }}"
-
   tasks:
   - include_role:
       name: vmware-provision
