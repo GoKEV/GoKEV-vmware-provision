@@ -44,6 +44,12 @@
   register: newvminfo
   changed_when: False
 
+- name: New VM info complete
+  debug:
+    msg: "New VM {{ vm_name }} has full info of {{ newvminfo }}"
+  when: newvminfo is defined
+  ignore_errors: true
+
 - name: New VM info
   debug:
     msg: "New VM {{ vm_name }} has IP address {{ newvminfo.instance.ipv4 }} and UUID {{ newvminfo.instance.hw_product_uuid }}"
