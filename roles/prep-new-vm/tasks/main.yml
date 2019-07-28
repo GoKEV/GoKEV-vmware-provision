@@ -23,6 +23,6 @@
 - name: expand the filesystem if possible
   filesystem:
     fstype: xfs
-    dev: /dev/sda
+    dev: /dev/sda2
     resizefs: yes
 
