@@ -20,9 +20,8 @@
   hostname:
     name: "{{ inventory_hostname }}"
 
-
 - name: put the fdisk answer file in place
-  file:
+  copy:
     src: files/fdisk_answers.txt
     dest: /tmp/answers
 
@@ -34,4 +33,9 @@
     fstype: xfs
     dev: /dev/sda2
     resizefs: yes
+
+- name: remove the fdisk answer file
+  file:
+    path: /tmp/answers
+    state: absent
 
