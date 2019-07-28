@@ -26,7 +26,12 @@
     dest: /tmp/answers
 
 - name: expand partitions with fdisk
-  raw: 'fdisk /dev/sda < /tmp/answers && partprobe'
+  raw: 'fdisk /dev/sda < /tmp/answers'
+  failed_when: no
+
+- name: probe partitions with partprobe
+  raw: 'partprobe'
+  failed_when: no
 
 - name: expand the xfs filesystem
   filesystem:
