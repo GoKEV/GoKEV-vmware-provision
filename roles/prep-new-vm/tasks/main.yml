@@ -20,6 +20,22 @@
   hostname:
     name: "{{ inventory_hostname }}"
 
+
+- name: Remove partition number 2
+  parted:
+    device: /dev/sda
+    number: 2
+    state: absent
+
+- name: Recreate partition number 2
+  parted:
+    device: /dev/sda
+    number: 2
+    state: present
+
+- name: register updated partition info
+  raw: partprobe /dev/sda
+
 - name: expand the filesystem if possible
   filesystem:
     fstype: xfs
