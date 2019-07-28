@@ -11,7 +11,7 @@
 
 - name: Packages to install
   yum:
-    name: 
+    name:
       - nano
       - wget
     state: present
@@ -19,4 +19,10 @@
 - name: "set hostname to {{ inventory_hostname }}"
   hostname:
     name: "{{ inventory_hostname }}"
+
+- name: expand the filesystem if possible
+  filesystem:
+    fstype: xfs
+    dev: /dev/sda
+    resizefs: yes
 
