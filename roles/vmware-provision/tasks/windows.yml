@@ -70,29 +70,10 @@
   register: newvminfo
   changed_when: False
 
-###################  Wait for jobs to complete ###################
-
-- name: Wait for DC instance creation to complete
-  async_status: jid="{{ item.ansible_job_id }}"
-  register: dc_instances
-  until: dc_instances.finished
-  retries: 300
-  with_items: "{{ dc_jobs.results }}"
 
 ################### Add hosts ######################
 
 - name: DomainController | Add new instance to host group
-  add_host:
-    hostname: "windc"
-    ansible_host: "{{ item.ipv4  }}"
-    ansible_port: 5986
-    ansible_user: "Administrator"
-    ansible_password: "{{ domain_admin_password }}"
-    ansible_connection: "winrm"
-    private_ip: "{{ item.ipv4 }}"
-    ansible_winrm_transport: "basic"
-    ansible_winrm_server_cert_validation: "ignore"
-    groups: windows_domain_controllers
   with_items: "{{ dc_instances.results | map(attribute='instance') | list }}"
 
 - name: New VM info
@@ -105,7 +86,13 @@
   add_host:
     name: "{{ vm_name }}"
     ansible_host: "{{ newvminfo.instance.ipv4 }}"
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    ansible_port: 5986
+    ansible_user: "Administrator"
+    ansible_password: redhat
+    ansible_connection: "winrm"
+    private_ip: "{{ item.ipv4 }}"
+    ansible_winrm_transport: "basic"
+    ansible_winrm_server_cert_validation: "ignore"
     groups: newvm
   changed_when: False
 
