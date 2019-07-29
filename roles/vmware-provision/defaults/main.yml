@@ -5,10 +5,10 @@
 #vc_hostname: vcenter.lab
 #vc_username: username
 #vc_password: password
-vc_datacenter: KevDC
+vc_datacenter: LabDC
 vm_template: kev-template
 vm_name: GoKEV-newvm-00000
-vm_cluster: KevCluster
+vm_cluster: LabCluster
 vm_guestid: centos64Guest
 vm_cpu_count: 1
 vc_datastore: vsanDatastore
