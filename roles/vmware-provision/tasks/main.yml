@@ -1,5 +1,1 @@
-- include_tasks: windows.yml
-  when: ostype == 'windows'
-
-- include_tasks: linux.yml
-  when: ostype == 'linux'
+- include_tasks: "{{ os_type }}.yml"
