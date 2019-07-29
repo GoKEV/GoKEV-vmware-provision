@@ -1,0 +1,6 @@
+@echo off
+
+SET DIR=%~dp0%
+
+::run installer
+%systemroot%\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& {{ chocolatey_temp_inst_path }}/install.ps1 %*"

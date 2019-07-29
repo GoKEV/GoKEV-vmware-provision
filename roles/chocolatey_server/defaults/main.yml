@@ -1,0 +1,6 @@
+---
+# defaults file for roles/chocolatey_server
+
+chocolatey_server_api: changeme
+chocolatey_temp_inst_path: c:\temp\
+chocolatey_install_file: chocolatey.0.10.11.nupkg

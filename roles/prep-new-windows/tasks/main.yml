@@ -20,3 +20,16 @@
       PRODUCT {{ ansible_os_product_id }}
       LICENSE {{ ansible_os_product_key }}
 
+
+
+- name: Set the region format to English United States
+  win_region:
+    format: en-US
+    copy_settings: yes
+    location: 244
+    unicode_language: en-GB
+  register: result
+
+- win_reboot:
+  when: result.restart_required
+
