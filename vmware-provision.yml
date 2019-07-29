@@ -8,7 +8,7 @@
       name: vmware-provision
 
 - name: Standardize the new vm
-  hosts: newvm
+  hosts: newlinuxvm
 
   vars:
   - motd_template_file: templates/motd_gokev_bw
@@ -17,4 +17,11 @@
   - prep-new-vm
   - vm-reboot
   - motd-splash
-  
+
+
+- name: Standardize the new windows vm
+  hosts: newwindowsvm
+
+  tasks:
+  - debug:
+      msg: "Running a role against {{ ansible_host }} inside vmware-provision.yml but nothing is defined.  Exiting now."

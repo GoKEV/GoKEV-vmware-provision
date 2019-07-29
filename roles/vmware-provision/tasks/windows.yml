@@ -78,15 +78,14 @@
 
 - name: "add {{ newvminfo.instance.ipv4 }} host to group newvm"
   add_host:
-    name: "{{ vm_name }}"
+    hostname: "{{ vm_name }}"
     ansible_host: "{{ newvminfo.instance.ipv4 }}"
     ansible_port: 5986
-    ansible_user: "Administrator"
+    ansible_user: Administrator
     ansible_password: redhat
-    ansible_connection: "winrm"
-    private_ip: "{{ newvminfo.instance.ipv4 }}"
-    ansible_winrm_transport: "basic"
-    ansible_winrm_server_cert_validation: "ignore"
-    groups: newvm
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    groups: newwindowsvm
   changed_when: False
 
