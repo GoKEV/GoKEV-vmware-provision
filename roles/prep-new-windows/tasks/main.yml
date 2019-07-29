@@ -11,3 +11,12 @@
 - name: Get product id and product key
   win_product_facts:
 
+- name: Some info about this machine:
+  debug:
+    msg: |
+      CHANNEL {{ ansible_os_license_channel }}
+      EDITION {{ ansible_os_license_edition }}
+      STATUS  {{ ansible_os_license_status }}
+      PRODUCT {{ ansible_os_product_id }}
+      LICENSE {{ ansible_os_product_key }}
+
