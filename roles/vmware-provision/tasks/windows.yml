@@ -84,7 +84,7 @@
     ansible_user: "Administrator"
     ansible_password: redhat
     ansible_connection: "winrm"
-    private_ip: "{{ item.ipv4 }}"
+    private_ip: "{{ newvminfo.instance.ipv4 }}"
     ansible_winrm_transport: "basic"
     ansible_winrm_server_cert_validation: "ignore"
     groups: newvm
