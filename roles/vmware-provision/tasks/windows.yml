@@ -1,0 +1,111 @@
+---
+- name: "Deploy template {{ vm_template }} into a new VM called {{ vm_name }}"
+  vmware_guest:
+    hostname: "{{ vc_hostname | default(omit) }}"
+    username: "{{ vc_username | default(omit) }}"
+    password: "{{ vc_password | default(omit) }}"
+    validate_certs: no
+    folder:  /
+    datacenter: "{{ vc_datacenter }}"
+    datastore: "{{ vc_datastore }}"
+    state: poweredoff
+    name: "{{ vm_name }}"
+    template: "{{ vm_template }}"
+    hardware:
+      memory_mb: "{{ vm_ram_mb }}"
+  delegate_to: localhost
+
+- name: "Reconfigure VM {{ vm_name }} to {{ vm_cpu_count }} CPUs, {{ vm_disk_size }} HDD, {{ vm_ram_mb }} RAM with {{ vm_network }}."
+  vmware_guest:
+    hostname: "{{ vc_hostname | default(omit) }}"
+    username: "{{ vc_username | default(omit) }}"
+    password: "{{ vc_password | default(omit) }}"
+    validate_certs: no
+    folder: /
+    state: present
+    name: "{{ vm_name }}"
+    hardware:
+      memory_mb: "{{ vm_ram_mb }}"
+      num_cpus: "{{ vm_cpu_count }}"
+    disk:
+    - size_gb: "{{ vm_disk_size }}"
+    networks:
+    - name: "{{ vm_network }}"
+      type: dhcp
+    customization:
+      autologon: True
+      orgname: GoKEVLab
+      fullname: GoKEVLab
+      hostname: "{{ vm_name }}"
+      # timezone 20 = Central Standard Time
+      # For more info see https://msdn.microsoft.com/en-us/library/ms912391(v=winembedded.11).aspx[msdn.microsoft.com]
+      timezone: 20
+      password: redhat
+      runonce:
+      - powershell.exe -command "Get-NetConnectionProfile | Set-NetConnectionProfile -NetworkCategory Private"
+      - powershell.exe -command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile C:\ConfigureRemotingForAnsible.ps1"
+      - powershell.exe -ExecutionPolicy Unrestricted -File C:\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert -EnableCredSSP
+      - powershell.exe -command "Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name 'fDenyTSConnections' -Value 0"
+      - powershell.exe -command "Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters' -Name 'DisabledComponents' -PropertyType DWord -Value 0xff"
+      - powershell.exe -command "Enable-NetFirewallRule -DisplayGroup 'Remote Desktop'"
+      - winrm set winrm/config/service/auth @{Basic="true"}
+      - winrm set winrm/config/service @{AllowUnencrypted="true"}
+      - powershell.exe -command "New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters -Name DisabledComponents -PropertyType DWord -Value 0xffffffff"
+  with_sequence: count=1
+  register: dc_jobs
+  async: 7200
+  poll: 0
+  delegate_to: localhost
+
+- name: "power on {{ vm_name }}"
+  vmware_guest:
+    hostname: "{{ vc_hostname | default(omit) }}"
+    username: "{{ vc_username | default(omit) }}"
+    password: "{{ vc_password | default(omit) }}"
+    validate_certs: no
+    state: poweredon
+    name: "{{ vm_name }}"
+    wait_for_ip_address: yes
+  delegate_to: localhost
+  register: newvminfo
+  changed_when: False
+
+###################  Wait for jobs to complete ###################
+
+- name: Wait for DC instance creation to complete
+  async_status: jid="{{ item.ansible_job_id }}"
+  register: dc_instances
+  until: dc_instances.finished
+  retries: 300
+  with_items: "{{ dc_jobs.results }}"
+
+################### Add hosts ######################
+
+- name: DomainController | Add new instance to host group
+  add_host:
+    hostname: "windc"
+    ansible_host: "{{ item.ipv4  }}"
+    ansible_port: 5986
+    ansible_user: "Administrator"
+    ansible_password: "{{ domain_admin_password }}"
+    ansible_connection: "winrm"
+    private_ip: "{{ item.ipv4 }}"
+    ansible_winrm_transport: "basic"
+    ansible_winrm_server_cert_validation: "ignore"
+    groups: windows_domain_controllers
+  with_items: "{{ dc_instances.results | map(attribute='instance') | list }}"
+
+- name: New VM info
+  debug:
+    msg: "New VM {{ vm_name }} has IP address {{ newvminfo.instance.ipv4 }} and UUID {{ newvminfo.instance.hw_product_uuid }}"
+  when: newvminfo.instance.ipv4 is defined
+  ignore_errors: true
+
+- name: "add {{ newvminfo.instance.ipv4 }} host to group newvm"
+  add_host:
+    name: "{{ vm_name }}"
+    ansible_host: "{{ newvminfo.instance.ipv4 }}"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    groups: newvm
+  changed_when: False
+
