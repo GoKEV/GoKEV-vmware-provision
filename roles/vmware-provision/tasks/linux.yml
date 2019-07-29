@@ -50,7 +50,7 @@
   when: newvminfo.instance.ipv4 is defined
   ignore_errors: true
 
-- name: "add {{ newvminfo.instance.ipv4 }} host to group newvm"
+- name: "add {{ newvminfo.instance.ipv4 }} host to group newlinuxvm"
   add_host:
     name: "{{ vm_name }}"
     ansible_host: "{{ newvminfo.instance.ipv4 }}"
