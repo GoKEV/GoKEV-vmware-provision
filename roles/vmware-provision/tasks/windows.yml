@@ -70,12 +70,6 @@
   register: newvminfo
   changed_when: False
 
-
-################### Add hosts ######################
-
-- name: DomainController | Add new instance to host group
-  with_items: "{{ dc_instances.results | map(attribute='instance') | list }}"
-
 - name: New VM info
   debug:
     msg: "New VM {{ vm_name }} has IP address {{ newvminfo.instance.ipv4 }} and UUID {{ newvminfo.instance.hw_product_uuid }}"
