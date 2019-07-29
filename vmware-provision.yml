@@ -19,9 +19,10 @@
   - motd-splash
 
 
+
+
 - name: Standardize the new windows vm
   hosts: newwindowsvm
 
-  tasks:
-  - debug:
-      msg: "Running a role against {{ ansible_host }} inside vmware-provision.yml but nothing is defined.  Exiting now."
+  roles:
+  - prep-new-windows
