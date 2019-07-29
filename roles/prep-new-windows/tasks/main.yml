@@ -1,0 +1,13 @@
+---
+# tasks file for prep-new-windows
+
+
+
+- name: Set timezone to 'Central Standard Time' (GMT-06:00)
+  win_timezone:
+    timezone: Central Standard Time
+
+
+- name: Get product id and product key
+  win_product_facts:
+
