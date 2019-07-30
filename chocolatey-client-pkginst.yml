@@ -1,0 +1,17 @@
+- name: install specific packages via chocolatey
+  hosts: all
+
+  vars:
+  - packages_to_install:
+      firefox
+      notepadplusplus.install
+      7zip.install
+      putty.install
+      clash-of-clans
+
+  tasks:
+  - name: Install multiple packages
+    win_chocolatey:
+      name: "{{ packages_to_install }}"
+      state: present
+
