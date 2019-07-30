@@ -1,8 +1,5 @@
 ---
 # tasks file for prep-new-windows
-
-
-
 - name: Set timezone to 'Central Standard Time' (GMT-06:00)
   win_timezone:
     timezone: Central Standard Time
@@ -36,4 +33,4 @@
 - name: Reboot if we need to but dont if we dont
   win_reboot:
   when: hostname_result.restart_required or region_result.restart_required
-
+  fail_when: no
