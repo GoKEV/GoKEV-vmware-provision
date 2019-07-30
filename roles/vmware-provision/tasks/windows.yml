@@ -63,12 +63,3 @@
     groups: newwindowsvm
   changed_when: False
 
-- name: Change the hostname to sample-hostname
-  win_hostname:
-    name: "{{ vm_name }}"
-  register: res
-
-- name: Reboot
-  win_reboot:
-  when: res.reboot_required
-
