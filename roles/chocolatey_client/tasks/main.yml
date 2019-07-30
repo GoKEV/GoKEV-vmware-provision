@@ -1,0 +1,13 @@
+---
+# tasks file for chocolatey_client
+
+- name: Install the chocolatey command
+  win_shell: |
+    Set-ExecutionPolicy Bypass -Scope Process -Force; 
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+- name: Ensure Chocolatey itself is installed and use internal repo as source
+  win_chocolatey:
+    name: chocolatey
+    source: http://10.0.30.70/chocolatey
+
