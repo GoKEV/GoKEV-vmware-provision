@@ -1,0 +1,17 @@
+---
+- name: Build a VMware guest from template
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+  - include_role:
+      name: vmware-provision
+
+- name: Standardize the new windows vm
+  hosts: newwindowsvm
+
+  roles:
+  - prep-new-windows
+  - chocolatey_client
+
+
