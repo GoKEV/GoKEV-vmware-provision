@@ -64,4 +64,3 @@
     name_fqdn: "{{ vm_name }}.{{ vm_domain }}"
     groups: newwindowsvm
   changed_when: False
-
