@@ -2,7 +2,7 @@
   hosts: all
 
   vars:
-  - package_action: install
+  - package_action: present
 
   - packages_to_install:
       firefox
@@ -12,7 +12,7 @@
       clash-of-clans
 
   tasks:
-  - name: Install multiple packages
+  - name: "Assure packages are {{ package_action }}"
     win_chocolatey:
       name: "{{ packages_to_install }}"
       state: "{{ package_action }}"
