@@ -22,9 +22,9 @@
       insertbefore: "    </lan>"
       block: |
         <staticmap>
-          <mac>{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}</mac>
+          <mac>{{ ansible_default_ipv4.macaddress }}</mac>
           <cid>{{ name_hostonly }}</cid>
-          <ipaddr>10.0.30.123</ipaddr>
+          <ipaddr>10.0.30.70</ipaddr>
           <hostname>{{ name_hostonly }}</hostname>
           <winsserver/>
           <dnsserver/>
