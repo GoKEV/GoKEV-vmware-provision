@@ -16,9 +16,9 @@
       - wget
     state: present
 
-- name: "set hostname to {{ inventory_hostname }}"
+- name: "set hostname to {{ name_fqdn }}"
   hostname:
-    name: "{{ inventory_hostname }}"
+    name: "{{ name_fqdn }}"
 
 - name: put the fdisk answer file in place
   copy:

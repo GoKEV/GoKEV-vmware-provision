@@ -9,6 +9,7 @@
 vc_datacenter: LabDC
 vm_template: kev-template
 vm_name: GoKEV-newvm-00000
+vm_domain: lab
 vm_cluster: LabCluster
 vm_guestid: centos64Guest
 vm_cpu_count: 1

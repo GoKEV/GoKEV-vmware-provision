@@ -60,6 +60,8 @@
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_winrm_server_cert_validation: ignore
+    name_hostonly: "{{ vm_name }}"
+    name_fqdn: "{{ vm_name }}.{{ vm_domain }}"
     groups: newwindowsvm
   changed_when: False
 
