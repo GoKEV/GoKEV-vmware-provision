@@ -25,7 +25,7 @@
     unicode_language: en-GB
   register: region_result
 
-- name: Change the hostname to sample-hostname
+- name: "Change the hostname to {{ name_hostonly }}"
   win_hostname:
     name: "{{ name_hostonly }}"
   register: hostname_result
