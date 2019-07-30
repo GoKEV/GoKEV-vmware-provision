@@ -30,7 +30,5 @@
     name: "{{ vm_name }}"
   register: hostname_result
 
-- name: Reboot if we need to but dont if we dont
+- name: Rebootify it
   win_reboot:
-  when: hostname_result.restart_required or region_result.restart_required
-  fail_when: no
