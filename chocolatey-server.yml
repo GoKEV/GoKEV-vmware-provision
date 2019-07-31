@@ -14,23 +14,23 @@
   - prep-new-windows
   - chocolatey_server
 
-#  tasks:
-#  - name: Insert a static DHCP map for OPNsense
-#    blockinfile:
-#      path: /conf/config.xml
-#      marker: "  <dhcpd>"
-#      insertbefore: "    </lan>"
-#      block: |
-#        <staticmap>
-#          <mac>{{ hostvars[inventory_hostname]['ansible_default_ipv4']['macaddress'] }}</mac>
-#          <cid>{{ name_hostonly }}</cid>
-#          <ipaddr>10.0.30.70</ipaddr>
-#          <hostname>{{ name_hostonly }}</hostname>
-#          <winsserver/>
-#          <dnsserver/>
-#          <ntpserver/>
-#        </staticmap>
-#    delegate_to: 10.0.30.1
-
+  tasks:
+  - name: Insert a static DHCP map for OPNsense
+    blockinfile:
+      path: /conf/config.xml
+      marker: "  <dhcpd>"
+      insertbefore: "    </lan>"
+      block: |
+        <staticmap>
+          <mac>{{ hostvars[inventory_hostname]['ansible_default_ipv4']['macaddress'] }}</mac>
+          <cid>{{ name_hostonly }}</cid>
+          <ipaddr>10.0.30.70</ipaddr>
+          <hostname>{{ name_hostonly }}</hostname>
+          <winsserver/>
+          <dnsserver/>
+          <ntpserver/>
+        </staticmap>
+    delegate_to: 10.0.30.1
+    when: no
 
 

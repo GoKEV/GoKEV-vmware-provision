@@ -23,11 +23,11 @@
 
 - name: Create Unbound DNS Entries on OpnSense
   hosts: newlinuxvm,newwindowsvm
-#  vars:
-#    host: gokevtest01
-#    domain: lab
-#    host_ip: 10.0.30.123
-#    host_desc: gokevestdesc
+  vars:
+    host: gokevtest01
+    domain: lab
+    host_ip: 10.0.30.123
+    host_desc: gokevestdesc
 
   tasks:
 
@@ -47,23 +47,4 @@
           <ntpserver/>
         </staticmap>
     delegate_to: 10.0.30.1
-
-
-
-## vars that we set in the provisioner
-#    name_hostonly: "{{ vm_name }}"
-#    name_fqdn: "{{ vm_name }}.{{ vm_domain }}"
-
-
-
-#    block: |
-#      <staticmap>
-#        <mac>{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}</mac>
-#        <cid>{{ mapped_hostname }}</cid>
-#        <ipaddr>{{ mapped_ip }}</ipaddr>
-#        <hostname>{{ mapped_hostname }}</hostname>
-#        <winsserver/>
-#        <dnsserver/>
-#        <ntpserver/>
-#      </staticmap>
-
+    when: no
