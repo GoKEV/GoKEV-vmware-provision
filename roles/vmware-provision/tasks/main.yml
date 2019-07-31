@@ -7,4 +7,4 @@
 - include_tasks: "{{ os_type }}.yml"
   vars:
     new_vm_name: "{{ vm_name }}"
-  when: new_vm_names is undefined or (new_vm_names|length>0)
+  when: (new_vm_names|length>0)
