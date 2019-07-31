@@ -7,7 +7,7 @@
   vars:
     newname: "{{ vm_name }}"
   with_items: "{{ new_vm_names }}"
-  when: new_vm_names is defined and vm_name is undefined
+  when: new_vm_names is defined
 
 - include_tasks: "{{ os_type }}.yml"
   vars:
