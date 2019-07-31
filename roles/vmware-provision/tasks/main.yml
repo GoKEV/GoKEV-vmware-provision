@@ -1,11 +1,6 @@
-- set_fact:
-    new_vm_names:
-    - one
-    - two
-
 - include_tasks: "{{ os_type }}.yml"
   vars:
-    new_vm_name: "{{ vm_name }}"
+    new_vm_name: "{{ item }}"
   with_items: "{{ new_vm_names }}"
   when: new_vm_names is defined
 
