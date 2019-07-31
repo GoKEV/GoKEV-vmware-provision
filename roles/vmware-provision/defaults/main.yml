@@ -20,4 +20,4 @@ vm_network: VM Network
 vm_ram_mb: 1024
 vm_state: poweredon
 validate_certs: no
-
+new_vm_names: []
