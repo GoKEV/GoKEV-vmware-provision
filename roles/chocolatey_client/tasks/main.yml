@@ -6,8 +6,14 @@
     Set-ExecutionPolicy Bypass -Scope Process -Force; 
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-- name: Ensure Chocolatey itself is installed and use internal repo as source
-  win_chocolatey:
-    name: chocolatey
+- name: Add new internal source
+  win_chocolatey_source:
+    name: GoKEV Lab Chocolatey Repo
     source: http://10.0.30.70/chocolatey
+    state: present
+
+- name: Disable Chocolatey source
+  win_chocolatey_source:
+    name: chocolatey
+    state: disabled
 
