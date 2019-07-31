@@ -1,10 +1,16 @@
+- set_fact:
+    new_vm_names: "{{ vm_name.split() }}"
+
 - include_tasks: "{{ os_type }}.yml"
   vars:
     new_vm_name: "{{ item }}"
   with_items: "{{ new_vm_names }}"
-  when: new_vm_names is defined and (new_vm_names|length>0)
 
-- include_tasks: "{{ os_type }}.yml"
-  vars:
-    new_vm_name: "{{ vm_name }}"
-  when: new_vm_names is undefined or (new_vm_names|length<1)
+
+
+#  when: new_vm_names is defined and (new_vm_names|length>0)
+#
+#- include_tasks: "{{ os_type }}.yml"
+#  vars:
+#    new_vm_name: "{{ vm_name }}"
+#  when: new_vm_names is undefined or (new_vm_names|length<1)
