@@ -1,12 +1,12 @@
-#- set_fact:
-#    new_vm_names: "{{ vm_name }}"
-#    cacheable: yes
-#    when: new_vm_names is undefined
+- set_fact:
+    new_vm_names: "{{ vm_name }}"
+    cacheable: yes
+    when: "{{ new_vm_names }}" is undefined
 #
 #- import_tasks: "{{ os_type }}.yml"
 #  vars:
 #    newname: "{{ vm_name }}"
 #  with_items: "{{ new_vm_names }}"
 
-- debug: 
-    var: vm_name
+- debug:
+    var: new_vm_names
