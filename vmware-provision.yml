@@ -20,6 +20,7 @@
   hosts: newwindowsvm
   roles:
   - prep-new-windows
+  - chocolatey_client
 
 - name: Create Unbound DNS Entries on OpnSense
   hosts: newlinuxvm,newwindowsvm
