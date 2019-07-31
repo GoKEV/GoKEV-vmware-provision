@@ -1,5 +1,5 @@
 ---
-- name: "Deploy template {{ vm_template }} into a new VM called {{ vm_name }}"
+- name: "Deploy template {{ vm_template }} into a new VM called {{ new_vm_name}}"
   vmware_guest:
     hostname: "{{ vc_hostname | default(omit) }}"
     username: "{{ vc_username | default(omit) }}"
@@ -9,13 +9,13 @@
     datacenter: "{{ vc_datacenter }}"
     datastore: "{{ vc_datastore }}"
     state: poweredoff
-    name: "{{ vm_name }}"
+    name: "{{ new_vm_name}}"
     template: "{{ vm_template }}"
     hardware:
       memory_mb: "{{ vm_ram_mb }}"
   delegate_to: localhost
 
-- name: "Reconfigure VM {{ vm_name }} to {{ vm_cpu_count }} CPUs, {{ vm_disk_size }} HDD, {{ vm_ram_mb }} RAM with {{ vm_network }}."
+- name: "Reconfigure VM {{ new_vm_name}} to {{ vm_cpu_count }} CPUs, {{ vm_disk_size }} HDD, {{ vm_ram_mb }} RAM with {{ vm_network }}."
   vmware_guest:
     hostname: "{{ vc_hostname | default(omit) }}"
     username: "{{ vc_username | default(omit) }}"
@@ -23,7 +23,7 @@
     validate_certs: no
     folder: /
     state: present
-    name: "{{ vm_name }}"
+    name: "{{ new_vm_name}}"
     hardware:
       memory_mb: "{{ vm_ram_mb }}"
       num_cpus: "{{ vm_cpu_count }}"
@@ -31,14 +31,14 @@
     - size_gb: "{{ vm_disk_size }}"
   delegate_to: localhost
 
-- name: "power on {{ vm_name }}"
+- name: "power on {{ new_vm_name}}"
   vmware_guest:
     hostname: "{{ vc_hostname | default(omit) }}"
     username: "{{ vc_username | default(omit) }}"
     password: "{{ vc_password | default(omit) }}"
     validate_certs: no
     state: poweredon
-    name: "{{ vm_name }}"
+    name: "{{ new_vm_name}}"
     wait_for_ip_address: yes
   delegate_to: localhost
   register: newvminfo
@@ -46,17 +46,17 @@
 
 - name: New VM info
   debug:
-    msg: "New VM {{ vm_name }} has IP address {{ newvminfo.instance.ipv4 }} and UUID {{ newvminfo.instance.hw_product_uuid }}"
+    msg: "New VM {{ new_vm_name}} has IP address {{ newvminfo.instance.ipv4 }} and UUID {{ newvminfo.instance.hw_product_uuid }}"
   when: newvminfo.instance.ipv4 is defined
   ignore_errors: true
 
 - name: "add {{ newvminfo.instance.ipv4 }} host to group newlinuxvm"
   add_host:
-    name: "{{ vm_name }}"
+    name: "{{ new_vm_name}}"
     ansible_host: "{{ newvminfo.instance.ipv4 }}"
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-    name_hostonly: "{{ vm_name }}"
-    name_fqdn: "{{ vm_name }}.{{ vm_domain }}"
+    name_hostonly: "{{ new_vm_name}}"
+    name_fqdn: "{{ new_vm_name}}.{{ vm_domain }}"
     groups: newlinuxvm
   changed_when: False
 
