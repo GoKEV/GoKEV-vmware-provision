@@ -3,7 +3,7 @@
     - one
     - two
 
-- import_tasks: "{{ os_type }}.yml"
+- include_tasks: "{{ os_type }}.yml"
   vars:
     newname: "{{ vm_name }}"
   with_items: "{{ new_vm_names }}"
