@@ -3,6 +3,8 @@
     cacheable: yes
     when: new_vm_names is undefined
 
-- include_tasks: "{{ os_type }}.yml" "newname={{ vm_name }}"
+- import_tasks: "{{ os_type }}.yml"
+  vars:
+    newname: "{{ vm_name }}"
   with_items: "{{ new_vm_names }}"
 
