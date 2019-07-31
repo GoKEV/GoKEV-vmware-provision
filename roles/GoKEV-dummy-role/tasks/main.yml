@@ -1,0 +1,20 @@
+---
+# tasks file for GoKEV-dummy-role
+
+- name: Display Message
+  debug:
+    msg: "Message {{ dummy_message }}"
+  when: dummy_fail is undefined
+
+#- name: Display ENVAR
+#  debug:
+#    msg: "EnvVar {{ lookup('env','dummy_message') }}"
+#  when: dummy_fail is undefined
+
+- fail:
+    msg: "MSG {{ dummy_fail }}"
+  when: dummy_fail is defined
+
+#- name: Display all Vars
+#  debug:
+#    var: vars
