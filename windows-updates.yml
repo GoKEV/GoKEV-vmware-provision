@@ -1,4 +1,4 @@
-- name: install specific packages via chocolatey
+- name: perform windows updates
   hosts: all
 
   vars:

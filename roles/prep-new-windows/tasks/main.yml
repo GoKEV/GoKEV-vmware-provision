@@ -32,3 +32,4 @@
 
 - name: Rebootify it
   win_reboot:
+  when: region_result.reboot_required is defined and hostname_result.reboot_required
