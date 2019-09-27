@@ -7,9 +7,7 @@
   hosts: localhost
   gather_facts: no
   vars:
-    mynewhosts:
-    - localhost
-    - 10.0.30.50
+    mynewhosts: []
 
   tasks:
   - add_host:
