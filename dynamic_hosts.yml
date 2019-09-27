@@ -1,0 +1,26 @@
+---
+# you can override the vars in here by running this as such:
+# 
+# ansible-playbook dynamic_hosts.yml -e  '{"mynewhosts":["10.0.30.50","10.0.30.51","localhost"]}'
+
+- name: Take the hosts var and make it cromulent
+  hosts: localhost
+  gather_facts: no
+  vars:
+    mynewhosts:
+    - localhost
+    - 10.0.30.50
+
+  tasks:
+  - add_host:
+      name: "{{ item }}"
+      groups: dynamic_group
+    with_items: "{{ mynewhosts }}"
+
+- name: Run some tasks agains the inventory we just fed in via variable mynewhosts to dynamic_group
+  hosts: dynamic_group
+
+  tasks:
+  - debug:
+      var: ansible_fqdn
+
