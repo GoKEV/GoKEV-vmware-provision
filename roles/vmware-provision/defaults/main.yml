@@ -2,10 +2,18 @@
 ---
 # defaults file for kev-vmware-provision/---
 
-## If these 3 are not defined, Ansible Tower will use the vcenter credential
+##       If these 3 are not defined, Ansible Tower will use the vcenter credential
 #vc_hostname: vcenter.lab
 #vc_username: username
 #vc_password: password
+
+##       If these 2 are defined as such, this will deploy a template
+##       with a linked clone, based on the snapshot called ansible
+##       leave these uncommented if you want to enable this feature.
+#vm_linked_clone: yes
+#vm_linked_snapshot: ansible
+
+
 vc_datacenter: LabDC
 vm_template: kev-template
 vm_name: GoKEV-newvm-00000
