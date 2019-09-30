@@ -1,7 +1,9 @@
-- set_fact:
+- name: "Parse the servernames on whitespace from the input string {{ vm_name }}"
+  set_fact:
     new_vm_names: "{{ vm_name.split() }}"
 
-- include_tasks: "{{ os_type }}.yml"
+- name: "{{ item }} is a {{ os_type }} system so we include {{ os_type }}.yml"
+  include_tasks: "{{ os_type }}.yml"
   vars:
     new_vm_name: "{{ item }}"
   with_items: "{{ new_vm_names }}"
