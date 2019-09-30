@@ -8,7 +8,7 @@
     folder:  /
     datacenter: "{{ vc_datacenter }}"
     datastore: "{{ vc_datastore }}"
-    state: poweredoff
+    state: poweredon
     name: "{{ new_vm_name}}"
     template: "{{ vm_template }}"
     linked_clone: "{{ vm_linked_clone | default(omit) }}"
@@ -18,16 +18,6 @@
       num_cpus: "{{ vm_cpu_count }}"
     disk:
     - size_gb: "{{ vm_disk_size }}"
-  delegate_to: localhost
-
-- name: "power on {{ new_vm_name}}"
-  vmware_guest:
-    hostname: "{{ vc_hostname | default(omit) }}"
-    username: "{{ vc_username | default(omit) }}"
-    password: "{{ vc_password | default(omit) }}"
-    validate_certs: no
-    state: poweredon
-    name: "{{ new_vm_name}}"
     wait_for_ip_address: yes
   delegate_to: localhost
   register: newvminfo
