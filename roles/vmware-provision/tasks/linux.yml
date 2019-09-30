@@ -19,6 +19,7 @@
     disk:
     - size_gb: "{{ vm_disk_size }}"
     wait_for_ip_address: yes
+    wait_for_customization: yes
   delegate_to: localhost
   register: newvminfo
   changed_when: False
