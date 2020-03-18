@@ -1,9 +1,12 @@
 ---
 # tasks file for rhel-subscribe-employee-sku
-- name: Subscribe the system to RHEL
-  redhat_subscription:
-    state: present
-    username: "{{ rhn_user }}"
-    password: "{{ rhn_pass }}"
-    pool_ids: "{{ rhn_pool }}"
-    force_register: true
+#- name: Subscribe the system to RHEL
+#  redhat_subscription:
+#    state: present
+#    username: "{{ rhn_user }}"
+#    password: "{{ rhn_pass }}"
+#    pool_ids: "{{ rhn_pool }}"
+#    force_register: true
+
+- name: use raw to subscribe
+  raw: "subscription-manager register --username {{ rhn_user }} --password {{ rhn_pass }} --auto-attach"
