@@ -34,18 +34,13 @@
   failed_when: no
 
 - name: expand the xfs filesystem
-  filesystem:
-    fstype: xfs
-    dev: /dev/sda2
-    resizefs: yes
-  failed_when: no
+  raw: xfs_growfs /
 
-- name: expand the xfs filesystem
-  filesystem:
-    fstype: xfs
-    dev: /dev/sda3
-    resizefs: yes
-  failed_when: no
+#  filesystem:
+#    fstype: xfs
+#    dev: /dev/sda3
+#    resizefs: yes
+#  failed_when: no
 
 - name: remove the fdisk answer file
   file:
