@@ -15,7 +15,7 @@
       - nano
       - wget
     state: present
-    ignore_errors: true
+  ignore_errors: true
 
 - name: "set hostname to {{ name_fqdn }}"
   hostname:
