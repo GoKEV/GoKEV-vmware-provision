@@ -11,10 +11,11 @@
   vars:
   - motd_template_file: templates/motd_gokev_bw
   roles:
+  - rhel-subscribe-employee-sku
   - prep-new-vm
   - vm-reboot
   - motd-splash
-#  - kev-nano
+  - kev-nano
 
 - name: Standardize the new windows vm
   hosts: newwindowsvm
