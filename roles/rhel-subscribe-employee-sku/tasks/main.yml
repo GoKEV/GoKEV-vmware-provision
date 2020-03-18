@@ -8,5 +8,5 @@
 #    pool_ids: "{{ rhn_pool }}"
 #    force_register: true
 
-- name: use raw to subscribe
-  raw: "subscription-manager register --username={{ rhn_user }} --password={{ rhn_pass }} --auto-attach --force"
+#- name: use raw to subscribe
+#  raw: "subscription-manager register --username={{ rhn_user }} --password={{ rhn_pass }} --auto-attach --force"
