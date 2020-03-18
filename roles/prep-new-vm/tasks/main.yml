@@ -9,13 +9,12 @@
     - net.ipv6.conf.lo.disable_ipv6
   failed_when: no
 
-- name: Packages to install
-  yum:
-    name:
-      - nano
-      - wget
-    state: present
-  ignore_errors: true
+#- name: Packages to install
+#  yum:
+#    name:
+#      - nano
+#      - wget
+#    state: present
 
 - name: "set hostname to {{ name_fqdn }}"
   hostname:
