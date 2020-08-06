@@ -23,17 +23,18 @@
 - name: Match template to a partition schema for CentOS7
   set_fact:
     fdisk_answerfile: files/fdisk_answers_p2.txt
-  when: vm_template | regex_search("*cent*7*")
+  when: 
+       - vm_template | regex_search('^.*cent.*7.*^')
 
-- name: Match template to a partition schema for CentOS8
-  set_fact:
-    fdisk_answerfile: files/fdisk_answers_p3.txt
-  when: vm_template | regex_search("*cent*8*")
+#- name: Match template to a partition schema for CentOS8
+#  set_fact:
+#    fdisk_answerfile: files/fdisk_answers_p3.txt
+#  when: vm_template | regex_search("*cent*8*")
 
-- name: Match template to a partition schema for RHEL8
-  set_fact:
-    fdisk_answerfile: files/fdisk_answers_p3.txt
-  when: vm_template | regex_search("*rhel*8*")
+#- name: Match template to a partition schema for RHEL8
+#  set_fact:
+#    fdisk_answerfile: files/fdisk_answers_p3.txt
+#  when: vm_template | regex_search("*rhel*8*")
 
 - name: put the fdisk answer file in place
   copy:
