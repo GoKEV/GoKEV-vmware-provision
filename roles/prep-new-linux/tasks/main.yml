@@ -20,9 +20,24 @@
   hostname:
     name: "{{ name_fqdn }}"
 
+- name: Match template to a partition schema for CentOS7
+  set_fact:
+    fdisk_answerfile: files/fdisk_answers_p2.txt
+  when: vm_template | match("*cent*7*")
+
+- name: Match template to a partition schema for CentOS8
+  set_fact:
+    fdisk_answerfile: files/fdisk_answers_p3.txt
+  when: vm_template | match("*cent*8*")
+
+- name: Match template to a partition schema for RHEL8
+  set_fact:
+    fdisk_answerfile: files/fdisk_answers_p3.txt
+  when: vm_template | match("*rhel*8*")
+
 - name: put the fdisk answer file in place
   copy:
-    src: files/fdisk_answers.txt
+    src: {{ fdisk_answerfile }}
     dest: /tmp/answers
 
 - name: expand partitions with fdisk
