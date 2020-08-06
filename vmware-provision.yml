@@ -6,13 +6,13 @@
   - include_role:
       name: vmware-provision
 
-- name: Standardize the new vm
+- name: Standardize the new linux vm
   hosts: newlinuxvm
   vars:
   - motd_template_file: templates/motd_gokev_bw
   roles:
   - rhel-subscribe-employee-sku
-  - prep-new-vm
+  - prep-new-linux
   - vm-reboot
   - motd-splash
   - kev-nano
