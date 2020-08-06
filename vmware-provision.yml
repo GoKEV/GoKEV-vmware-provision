@@ -3,6 +3,29 @@
   hosts: localhost
   gather_facts: no
   tasks:
+  - name: Match template to a partition schema for CentOS7
+    set_fact:
+      fdisk_answerfile: files/fdisk_answers_p2.txt
+      os_type: linux
+    when: vm_template | regex_search('(?i)^.*cent.*7.*$')
+
+  - name: Match template to a partition schema for CentOS8
+    set_fact:
+      fdisk_answerfile: files/fdisk_answers_p3.txt
+      os_type: linux
+    when: vm_template | regex_search('(?i)^.*cent.*8.*$')
+
+  - name: Match template to a partition schema for RHEL8
+    set_fact:
+      fdisk_answerfile: files/fdisk_answers_p3.txt
+      os_type: linux
+    when: vm_template | regex_search('(?i)^.*rhel.*8.*$')
+
+  - name: Match OS for Windows
+    set_fact:
+      os_type: windows
+    when: vm_template | regex_search('(?i)^.*win.*$')
+
   - include_role:
       name: vmware-provision
 
