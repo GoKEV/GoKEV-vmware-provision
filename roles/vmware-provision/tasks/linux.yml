@@ -50,11 +50,24 @@
   when: newvminfo.instance.ipv4 is defined
   ignore_errors: true
 
+- name: Match fdisk template to a partition schema for EL7
+  set_fact:
+    fdisk_answerfile: files/fdisk_answers_p2.txt
+    os_type: linux
+  when: vm_template | regex_search('(?i)^.*[cent|rhel].*7.*$')
+
+- name: Match fdisk template to a partition schema for EL8
+  set_fact:
+    fdisk_answerfile: files/fdisk_answers_p3.txt
+    os_type: linux
+  when: vm_template | regex_search('(?i)^.*[cent|rhel].*8.*$')
+
 - name: "add {{ newvminfo.instance.ipv4 }} host to group newlinuxvm"
   add_host:
     name: "{{ new_vm_name}}"
     ansible_host: "{{ newvminfo.instance.ipv4 }}"
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    fdisk_answerfile: "{{ fdisk_answerfile }}"
     name_hostonly: "{{ new_vm_name}}"
     name_fqdn: "{{ new_vm_name}}.{{ vm_domain }}"
     groups: newlinuxvm
