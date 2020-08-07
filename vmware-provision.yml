@@ -36,5 +36,5 @@
   hosts: newwindowsvm
   roles:
   - prep-new-windows
-  - chocolatey_client
+#  - chocolatey_client
 
