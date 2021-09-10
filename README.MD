@@ -26,7 +26,7 @@ vm_ram_mb: '4096'
 vm_template: TEMPLATE-GoKEV-RHEL8
 </pre>
 
-## Optional vars that can be passed
+## Optional linked_clone var
 - This option will use a vmware snapshot to build a linked clone
 - This makes provisioning much faster, but:
 - Using this option requires at least one vmware snapshot for the template you're using
