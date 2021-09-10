@@ -28,8 +28,8 @@ vm_template: TEMPLATE-GoKEV-RHEL8
 
 
 ## Notes on extra vars passed:
-The OS type "linux" or "windows" -- after provisioning the new VM, it will include subsequent roles `prep-new-windows` or `prep-new-linux`
-The value for `vm_name` can be whitespace-separated system names or a dict list.  If you enter `server01 server02 server03`, this playbook will parse that into three individual servers
+- The OS type "linux" or "windows" -- after provisioning the new VM, it will include subsequent roles `prep-new-windows` or `prep-new-linux`
+- The value for `vm_name` can be whitespace-separated system names or a dict list.  If you enter `server01 server02 server03`, this playbook will parse that into three individual servers
 
 
 Author Information
