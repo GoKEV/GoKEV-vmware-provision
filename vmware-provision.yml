@@ -34,7 +34,7 @@
 
 - name: Standardize the new windows vm
   hosts: newwindowsvm
-  vars
+  vars: 
   - ansible_connection: winrm
   - ansible_winrm_transport: credssp
   - ansible_port: 5986
