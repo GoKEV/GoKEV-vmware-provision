@@ -26,6 +26,16 @@ vm_ram_mb: '4096'
 vm_template: TEMPLATE-GoKEV-RHEL8
 </pre>
 
+## Optional vars that can be passed
+- This option will use a vmware snapshot to build a linked clone
+- This makes provisioning much faster, but:
+- Using this option requires at least one vmware snapshot for the template you're using
+- If value is omitted, the default is "no" or normal behavior.
+<pre>
+vc_linked_clone: yes
+</pre>
+
+
 
 ## Notes on extra vars passed:
 - The OS type "linux" or "windows" -- after provisioning the new VM, it will include subsequent roles `prep-new-windows` or `prep-new-linux`
